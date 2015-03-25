@@ -24,14 +24,34 @@ class ComputerPlayer
 
 
 
-    # return (check_moves & attack_moves & safe_moves).sample unless (check_moves & attack_moves & safe_moves).empty?
-    # return (attack_moves & safe_moves).sample unless (attack_moves & safe_moves).empty?
-    # return (check_moves & good_trade).sample unless (check_moves & good_trade).empty?
+    #return (check_moves & attack_moves & safe_moves).sample unless (check_moves & attack_moves & safe_moves).empty?
+    puts "trying attack and safe"
+    return (attack_moves & safe_moves).sample unless (attack_moves & safe_moves).empty?
 
+    puts "trying intersection"
+    return (check_moves & good_trade).sample unless (check_moves & good_trade).empty?
+    puts "past intersection, trying highest and good"
+    p attack_moves
+    p 0
+    p highest_attack_moves
+    p 1
+    p good_trade
+    p 2
+    p attack_moves
+    p 3
+    return (good_trade & highest_attack_moves).sample unless (highest_attack_moves & good_trade).empty?
+    puts "past highest and good, trying good"
 
     return good_trade.sample unless good_trade.empty?
+    puts "trying safe"
+    return safe_moves.sample unless safe_moves.empty?
+    puts "past good, trying check"
     return check_moves.sample unless check_moves.empty?
+    puts "past check, trying highest"
+    return highest_attack_moves.sample unless highest_attack_moves.empty?
+    puts "past highest, trying attack"
     return attack_moves.sample unless attack_moves.empty?
+    puts "past attack, trying possible"
 
     possible_moves.sample
 
@@ -39,6 +59,7 @@ class ComputerPlayer
 
   def check_moves
     check_moves = []
+    puts "in check moves"
     @possible.each do |move|
       duped_board = @board.dup
       duped_board.move(move[0],move[1])
@@ -46,7 +67,9 @@ class ComputerPlayer
         check_moves << move
       end
     end
+    p check_moves
     check_moves
+
   end
   def checkmate_moves
     @possible.each do |move|
@@ -93,13 +116,15 @@ class ComputerPlayer
 
 
   def good_trade
-    good_trades = []
-    attack_moves.each do |move|
-      base_val = @board[move[0]].class::VALUE
-      good_trades = attack_moves.select do |move|
-        @board[move[1]].class::VALUE >= base_val
-      end
+
+
+    puts "in good trade"
+    good_trades = attack_moves.select do |move|
+      p move
+      @board[move[1]].class::VALUE >= @board[move[0]].class::VALUE
     end
+    good_trades = [] if good_trades.nil?
+    p good_trades
     good_trades
   end
 
@@ -108,17 +133,19 @@ class ComputerPlayer
     possible_attacks = @possible.select do |move|
       !@board[move[1]].nil?
     end
+    possible_attacks = [] if possible_attacks.nil?
+    possible_attacks.sort! {|m1, m2| @board[m2[1]].class::VALUE <=> @board[m1[1]].class::VALUE}
 
-    possible_attacks.sort! {|move| @board[move[1]].class::VALUE}
-    possible_attacks.reverse
 
   end
 
   def highest_attack_moves
-
-    best_val = attack_moves.first[1].class::VALUE
-    attack_moves.select {|move| @board[move[1]].class::VALUE == best_val }
-
+    highest = []
+    if !attack_moves.empty?
+      best_val = @board[attack_moves.first[1]].class::VALUE
+      highest = attack_moves.select {|move| @board[move[1]].class::VALUE == best_val }
+    end
+    highest
   end
 
 

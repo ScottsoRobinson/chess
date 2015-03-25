@@ -49,7 +49,7 @@ class Array
 end
 
 if __FILE__ == $PROGRAM_NAME
-
+  
   puts "Would you like to play against a computer? Y or N?"
   response = gets.chomp.upcase
   if response == "Y"

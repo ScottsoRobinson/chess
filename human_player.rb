@@ -20,7 +20,7 @@ class HumanPlayer
 
   def play_turn
 
-    print "Please choose a piece by its location and where you would like to move it to: "
+    print "Please choose a piece by its location and where you would like to move it to (ex: c2,c4): "
     move = gets.chomp
     parse_input(move)
   rescue

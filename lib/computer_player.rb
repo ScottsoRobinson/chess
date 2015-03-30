@@ -12,65 +12,56 @@ class ComputerPlayer
     @possible = possible_moves
     @safe_moves = safe_moves
     return checkmate_moves.first unless checkmate_moves.empty?
-
-
-
-
-    # if duped_board.in_check?(:w) && possible_attacks.include?(move)
-    #   check_attacks << move
-    # elsif duped_board.in_check?(:w)
-    #   checks << move
-    # end
-    puts "in danger pieces"
-    p in_danger_pieces
-    puts "in danger moves"
-    p in_danger_moves
-    puts "trying in danger and now safe check and attack"
+    # puts "in danger pieces"
+    # p in_danger_pieces
+    # puts "in danger moves"
+    # p in_danger_moves
+    # puts "trying in danger and now safe check and attack"
     return (in_danger_moves & safe_moves & check_moves & attack_moves).sample unless (in_danger_moves & safe_moves & check_moves & attack_moves).empty?
-    puts "trying in danger and now safe and check"
+    # puts "trying in danger and now safe and check"
     return (in_danger_moves & safe_moves & check_moves).sample unless (in_danger_moves & safe_moves & check_moves).empty?
-    puts "trying in danger and now safe and good trade"
+    # puts "trying in danger and now safe and good trade"
     return (in_danger_moves & safe_moves & good_trade).sample unless (in_danger_moves & safe_moves & good_trade).empty?
 
-    puts "trying in danger and now safe and attack"
+    # puts "trying in danger and now safe and attack"
 
     return (in_danger_moves & safe_moves & attack_moves).sample unless (in_danger_moves & safe_moves & attack_moves).empty?
-    puts "in danger and now safe"
+    # puts "in danger and now safe"
     return (in_danger_moves & safe_moves).sample unless (in_danger_moves & safe_moves).empty?
-    puts "trying check attack and safe"
+    # puts "trying check attack and safe"
     return (check_moves & attack_moves & safe_moves).sample unless (check_moves & attack_moves & safe_moves).empty?
-    puts "trying highest attack and safe"
+    # puts "trying highest attack and safe"
     return (highest_attack_moves & safe_moves).sample unless (highest_attack_moves & safe_moves).empty?
-    puts "trying good_trade and safe"
+    # puts "trying good_trade and safe"
     return (good_trade & safe_moves).sample unless (good_trade & safe_moves).empty?
-    puts "trying attack and safe"
-    p (attack_moves & safe_moves)
+    # puts "trying attack and safe"
+    # p (attack_moves & safe_moves)
     return (attack_moves & safe_moves).sample unless (attack_moves & safe_moves).empty?
 
-    puts "trying check and good trade"
+    # puts "trying check and good trade"
     return (check_moves & good_trade).sample unless (check_moves & good_trade).empty?
-    puts "past intersection, trying highest and good"
-    p attack_moves
-    p 0
-    p highest_attack_moves
-    p 1
-    p good_trade
-    p 2
-    p attack_moves
-    p 3
+    # puts "past intersection, trying highest and good"
+    # p attack_moves
+    # p 0
+    # p highest_attack_moves
+    # p 1
+    # p good_trade
+    # p 2
+    # p attack_moves
+    # p 3
     return (good_trade & highest_attack_moves).sample unless (highest_attack_moves & good_trade).empty?
-    puts "past highest and good, trying good"
+    # puts "past highest and good, trying good"
 
     return good_trade.sample unless good_trade.empty?
-    puts "trying safe"
+    # puts "trying safe"
     return safe_moves.sample unless safe_moves.empty?
-    puts "past good, trying check"
+    # puts "past good, trying check"
     return check_moves.sample unless check_moves.empty?
-    puts "past check, trying highest"
+    # puts "past check, trying highest"
     return highest_attack_moves.sample unless highest_attack_moves.empty?
-    puts "past highest, trying attack"
+    # puts "past highest, trying attack"
     return attack_moves.sample unless attack_moves.empty?
-    puts "past attack, trying possible"
+    # puts "past attack, trying possible"
 
     possible_moves.sample
 
@@ -121,14 +112,14 @@ class ComputerPlayer
     duped_board.collect_pieces(color).each do |piece|
       current_spaces << piece.position
     end
-    p current_spaces
+
     opponent_color = color == :w ? :b : :w
     duped_board.collect_pieces(opponent_color).each do |piece|
       piece.valid_moves.each do |move|
         possible_landings << move
       end
     end
-    p possible_landings
+
     (possible_landings & current_spaces)
   end
 
@@ -162,11 +153,7 @@ class ComputerPlayer
     safe_moves
   end
 
-
   def good_trade
-
-
-
     good_trades = attack_moves.select do |move|
 
       @board[move[1]].class::VALUE >= @board[move[0]].class::VALUE

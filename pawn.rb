@@ -51,7 +51,7 @@ class Pawn < Piece
   end
 
   def move(target)
-    if possible_moves.include?(target)
+    if valid_moves.include?(target)
       @board[@position] = nil
       @position = target
       @board[@position] = self

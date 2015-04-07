@@ -1,9 +1,10 @@
-Chess, written in ruby incorporating all traditional aspects of gameplay, including castling and pawn promotion
+#Chess
+Written in ruby for the command line
+Download, bundle install, then run ./chess.rb from within the repo
+Dependencies: Ruby and [Colorize](https://github.com/fazibear/colorize)
 
-There is the option to play against another human or to play against computer AI
-
-Utilizes class inheritance between similar pieces to DRY up code
-
-Note: You must install the colorize gem in order for the game to run.
-If you are trying to execute the code and it says you do not have permission,
-try running chmod +x chess.rb from within the chess directory.
+##Features
+- Uses class inheritance between similar pieces
+- Can play against another person or AI
+- Pawn promotion and castling
+- Board class overwrites [] and []= methods
